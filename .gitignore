@@ -1,0 +1,8 @@
+*.git
+*.bak
+*.old
+*.tmp
+*.swp
+*.swo
+_old/
+shellscripts/

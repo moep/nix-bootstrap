@@ -4,6 +4,10 @@
 " use vim settings instsetead of vim
 set nocompatible
 
+" enable mouse in all modes
+set mouse=a
+
+
 " Don't parse last lines for vim commands
 set modelines=0
 
@@ -34,20 +38,22 @@ set softtabstop=2
 set shiftwidth=2
 set tabstop=2
 
-" don't replace tabs with spaces
-set noexpandtab
+" replace tabs with spaces
+set expandtab
 
 " autoindent
 set autoindent
 
 " no line wrapping
-set nowrap
+"set nowrap
 
 " no folding
 set nofoldenable
 
 " highlight current line
 set cursorline
+"hi CursorLine term=bold cterm=bold guibg=White
+hi CursorLine   cterm=NONE ctermbg=240 ctermfg=NONE
 
 " show non-printable characters
 set list
@@ -75,3 +81,6 @@ nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
 nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
+
+" == plugins ======================================================================================= 
+set runtimepath^=~/.vim/bundle/ctrlp.vim
