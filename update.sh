@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Copying dotfiles"
+echo "Copying dotfiles from home to here"
 
 dotfiles=(".bash_profile" ".gitconfig" ".inputrc" ".tmux.conf" ".vimrc" ".zshrc")
 
@@ -15,4 +15,7 @@ done
 
 echo "🐟"
 cp -r ${HOME}/.config/fish .
+
+echo ".figlet"
+cp -r ${HOME}/.figlet .
 

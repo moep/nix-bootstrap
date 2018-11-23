@@ -6,3 +6,5 @@
 *.swo
 _old/
 shellscripts/
+
+fish/generated_completions/

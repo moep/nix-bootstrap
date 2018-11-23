@@ -7,6 +7,17 @@ set nocompatible
 " enable mouse in all modes
 set mouse=a
 
+" Status line
+set ruler
+set laststatus=2
+hi StatusLine ctermbg=white ctermfg=240
+set statusline=%f                           " file name
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+set statusline+=%{&ff}] "file format
+set statusline+=%y      "filetype
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
 
 " Don't parse last lines for vim commands
 set modelines=0

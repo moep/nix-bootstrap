@@ -22,7 +22,7 @@ function main {
   ansi::cls
   ansi::cur_pos 1 1
   cat banner.txt
-   
+
   if [[ $ARG_BATCH == "true" ]]; then
     function cli::prompt_yn {
       return 0
