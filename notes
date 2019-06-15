@@ -1,1 +1,10 @@
 brew tap caskroom/cask
+
+brew tap homebrew/cask-fonts
+brew cask install font-fira-code
+
+brew cask install ...
+
+https://github.com/driesvints/dotfiles
+https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789
+osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to false'

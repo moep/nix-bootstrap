@@ -1,0 +1,19 @@
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward
+
+# Ignore case for tab autocompletion
+set completion-ignore-case on
+
+# List all matches in case of ambiguity
+set show-all-if-ambiguous on
+
+# Shift+Tab for scrolling through matches
+"\e[Z": menu-complete
+
+# UTF-8 input / output
+set input-meta-on
+set output-meta-on
+set convert-meta off
+
+# Use cursor position for autocomplete
+set skip-completet-text on

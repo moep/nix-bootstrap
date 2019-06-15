@@ -1,13 +1,25 @@
 #!/usr/bin/env bash
 
-source bootstrap.sh
+# TODO support profiles (desktop (light / normal), server)
+trap on_ctrl_c INT
+
+DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "$DIR" ]]; then
+  DIR="$PWD";
+fi
+
+source "${DIR}/bootstrap.sh"
+include lib/core.sh
 include lib/ui.sh
 include lib/os.sh
 include lib/str.sh
 include lib/cli.sh
+
+# Project specific include(s)
+include src/dotfiles.sh
 bootstrap::finish
 
-REQUIRED_APPS=(figlet git htop netcat nmap screenfetch vim wakeonlan youtube-dl zsh)
+REQUIRED_PGMS=(figlet htop netcat nmap pv screenfetch vim wakeonlan youtube-dl zsh)
 
 declare -r K_ICON_CHECK='✓'
 declare -r K_ICON_WARN='⚠'
@@ -21,41 +33,56 @@ function main {
 
   ansi::cls
   ansi::cur_pos 1 1
+  ansi::cur_hide
   cat banner.txt
+  ansi::reset
 
   if [[ $ARG_BATCH == "true" ]]; then
     function cli::prompt_yn {
-      return 0
+      local preselection=$2
+      if ! is::_ empty "${preselection}"; then
+        case $preselection in
+          'y'|'Y')
+            return $TRUE
+          ;;
+          *)
+            return $FALSE
+          ;;
+        esac
+      else
+        return $TRUE
+      fi
     }
   fi
 
   echo
-  ansi::bold; str::pad 15 "OS:"; ansi::reset; printf "%s" "$(uname -spr)"; printf "\r\n"
-  ansi::bold; str::pad 15 "Symlink:"; ansi::reset; echo $ARG_SYMLINK
-  ansi::bold; str::pad 15 "Batch mode:"; ansi::reset; echo $ARG_BATCH
-
+  ansi::bold; str::pad_right 15 "OS:"; ansi::reset; printf "%s" "$(uname -spr)"; printf "\r\n"
+  ansi::bold; str::pad_right 15 "Symlink:"; ansi::reset; echo $ARG_SYMLINK
+  ansi::bold; str::pad_right 15 "Batch mode:"; ansi::reset; echo $ARG_BATCH
   echo 
+  
+  # Install programms needed for this script
   ui::h1 prerequisites
-  check_prerequisites
-  echo
-
-  cli::prompt_yn "Install vim plugins?" && {
-    ui::h1 vim plugins
-    install_vim_plugins
+  dotfiles::install_prerequisites
+  
+  # Install Vim Plugins
+  ui::h1 plugins
+  cli::prompt_yn "Install vim plugins?" y && {
+    dotfiles::install_vim_plugins
+    echo
+  }
+  
+  # Install oh-my-zsh
+  cli::prompt_yn "Install oh-my-zsh?" n && {
+    echo -n "Installing oh-my-zsh "
+    os::exec_and_wait sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     echo
   }
 
-  cli::prompt_yn "Install oh-my-zsh?" && {
-    ui::h1 "oh-my-zsh"
-    #sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    echo
-  }
+  # Copy Dotfiles
+  dotfiles::copy_dotfiles
 
-  echo
-  ui::h1 .files
-  install_dotfile .vimrc ~/.vimrc
-  install_dotfile .zshrc ~/.zshrc
-  install_dotfile .tmux.config ~/.tmux.conf
+  ansi::cur_show
 }
 
 function parse_args() {
@@ -69,7 +96,6 @@ function parse_args() {
       ;;
       *)
         usage
-        return 1
     esac
   done
 
@@ -84,72 +110,23 @@ function usage() {
   exit 1
 }
 
-function check_prerequisites() {
-  # Installed apps
-  print_install_status brew
+function on_ctrl_c() {
+  cleanup
+  echo
+  echo "Aborted."
+
+  exit 0
 }
 
-function print_install_status() {
-  echo -en "  $1\r"
-  os::is_installed? $1 && {
-    ansi::green
-    ansi::bold
-    printf "%s" $K_ICON_CHECK
-    ansi::reset
-  } || {
-    ansi::red
-    ansi::bold
-    printf "%s" $K_ICON_FAIL
-    ansi::reset
-  }
+function cleanup() {
+  ansi::cur_show
+  ansi::reset
+  ui::enable_keyboard_input
+  # Kill all child processes
+  pkill -P $$
 
-  echo -en "\r\n"
-}
-
-function install_vim_plugins() {
-  # Ctrl+P
-  git clone https://github.com/ctrlpvim/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
-
-  # NERDTree
-  git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
-}
-
-function install_dotfile() {
-  local src=$1
-  local target=$2
-  
-  if [[ -e "${target}" ]]; then
-    cli::prompt_yn "Overwrite ${target}?" || return 1
-  fi
-
-  if [[ $ARG_SYMLINK == "true" ]]; then
-    symlink_dotfile $@
-  else
-    copy_dotfile $@
-  fi
-}
-
-function symlink_dotfile() {
-  local src=$1
-  local target=$2
-
-  echo -n "Symlinking "; ansi::cyan; echo -n $src; ansi::reset; 
-  ansi::bold; echo -n " ==> "; ansi::reset
-  ansi::blue; echo -n $target; ansi::reset
-  ln -s $src $target
   echo
 }
 
+main $@ 
 
-function copy_dotfile() {
-  local src=$1
-  local target=$2
-
-  echo -n "Copying "; ansi::cyan; echo -n $src; ansi::reset; 
-  ansi::bold; echo -n " ==> "; ansi::reset
-  ansi::blue; echo -n $target; ansi::reset
-  cp $src $target
-  echo
-}
-
-main $@
