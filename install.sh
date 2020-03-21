@@ -9,12 +9,13 @@ if [[ ! -d "$DIR" ]]; then
 fi
 
 source "${DIR}/bootstrap.sh"
+include lib/cli.sh
 include lib/core.sh
-include lib/ui.sh
 include lib/os.sh
 include lib/str.sh
-include lib/cli.sh
+include lib/ui.sh
 
+include lib/osx/iterm2.sh
 # Project specific include(s)
 include src/dotfiles.sh
 bootstrap::finish
@@ -61,6 +62,9 @@ function main {
   ansi::bold; str::pad_right 15 "Batch mode:"; ansi::reset; echo $ARG_BATCH
   echo 
   
+  # Theme selection
+  dotfiles::select_tty_theme
+  
   # Install programms needed for this script
   ui::h1 prerequisites
   dotfiles::install_prerequisites
@@ -80,7 +84,7 @@ function main {
   }
 
   # Copy Dotfiles
-  dotfiles::copy_dotfiles
+  dotfiles::copy_dotfiles  
 
   ansi::cur_show
 }

@@ -4,9 +4,9 @@
 
 # Set shellscripts library home to ./shellscripts ...
 if [[ -z "${SHELLSCRIPTS_HOME}" ]]; then
-  echo "SHELLSCRIPTS_HOME not set"
+  #echo "SHELLSCRIPTS_HOME not set"
   SHELLSCRIPTS_HOME=$(dirname "${BASH_SOURCE[0]}")"/shellscripts"
-  echo " --> ${SHELLSCRIPTS_HOME}"
+  #echo " --> ${SHELLSCRIPTS_HOME}"
 fi
 
 # ... and clone it if it does not exist
