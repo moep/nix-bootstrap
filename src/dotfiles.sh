@@ -186,7 +186,10 @@ function dotfiles::_set_tty_colors() {
 case "${__OS_ARCH}" in
   "Darwin")
     include src/dotfiles/osx.sh
-    ;;
+  ;;
+  "Linux")
+    # no special includes yet
+  ;;
   *)
   printf "Unsupported OS."
   exit $RC_ERROR
