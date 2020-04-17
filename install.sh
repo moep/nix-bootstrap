@@ -63,7 +63,7 @@ function main {
   echo 
   
   # Theme selection
-  dotfiles::select_tty_theme
+  #dotfiles::select_tty_theme
   
   # Install programms needed for this script
   ui::h1 prerequisites
