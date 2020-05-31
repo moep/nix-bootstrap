@@ -1,0 +1,3 @@
+[submodule "shellscripts"]
+	path = shellscripts
+	url = git@github.com:moep/shellscripts.git
