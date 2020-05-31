@@ -19,3 +19,5 @@ cp -r ${HOME}/.config/fish dotfiles/common/
 echo ".figlet"
 cp -r ${HOME}/.figlet dotfiles/common/
 
+echo ".config/ranger"
+cp -r ${HOME}/.config/ranger dotfiles/common/

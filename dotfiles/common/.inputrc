@@ -11,9 +11,9 @@ set show-all-if-ambiguous on
 "\e[Z": menu-complete
 
 # UTF-8 input / output
-set input-meta-on
-set output-meta-on
+#set input-meta-on
+#set output-meta-on
 set convert-meta off
 
 # Use cursor position for autocomplete
-set skip-completet-text on
+#set skip-complete-text on
