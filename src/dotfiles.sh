@@ -19,15 +19,19 @@ function dotfiles::install_vim_plugins() {
   mkdir -p "${plugin_dir}" 
 
   echo -n "    fzf "
-  os::exec_and_wait git clone https://github.com/junegunn/fzf.vim ${plugin_dir}/fzf
+  os::exec_and_wait git clone --depth=1 https://github.com/junegunn/fzf ${plugin_dir}/fzf
+  echo
+
+  echo -n "    fzf.vim "
+  os::exec_and_wait git clone --depth=1 https://github.com/junegunn/fzf.vim ${plugin_dir}/fzf.vim
   echo
 
   echo -n "    lightline "
-  os::exec_and_wait git clone https://github.com/itchyny/lightline.vim ${plugin_dir}/lightline
+  os::exec_and_wait git clone --depth=1 https://github.com/itchyny/lightline.vim ${plugin_dir}/lightline
   echo
 
   echo -n "    vim-buftabline "
-  os::exec_and_wait git clone https://github.com/ap/vim-buftabline ${plugin_dir}/vim-buftabline
+  os::exec_and_wait git clone --depth=1 https://github.com/ap/vim-buftabline ${plugin_dir}/vim-buftabline
   echo
 }
 
