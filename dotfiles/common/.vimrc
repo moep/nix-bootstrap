@@ -88,10 +88,14 @@ let mapleader=","
 autocmd FileType c set shiftwidth=2|set softtabstop=2|set cindent
 
 " == custom commands =============================================================================== 
-nnoremap <C-Left> :tabprevious<CR>
-nnoremap <C-Right> :tabnext<CR>
-nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
-nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
 
-" == plugins ======================================================================================= 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+" Buftabline
+nnoremap <C-Left> :bp<CR>
+nnoremap <C-Right> :bn<CR>
+
+" Fzf
+nnoremap <C-P> :Files<CR>
+
+"nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+"nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
+

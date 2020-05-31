@@ -14,16 +14,21 @@ function dotfiles::install_prerequisites() {
 
 function dotfiles::install_vim_plugins() {
   ui::h2 "Installing Vim plugins"
-  
-  echo -n "    Ctrl+P "
-  # Ctrl+P
-  os::exec_and_wait git clone https://github.com/ctrlpvim/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
+  # TODO decide how to handle nvim
+  local plugin_dir="${HOME}/.config/nvim/pack/vendor/start"
+  mkdir -p "${plugin_dir}" 
+
+  echo -n "    fzf "
+  os::exec_and_wait git clone https://github.com/junegunn/fzf.vim ${plugin_dir}/fzf
   echo
 
-  echo -n "    NERDTree "
-  # NERDTree
-  os::exec_and_wait git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
-  echo 
+  echo -n "    lightline "
+  os::exec_and_wait git clone https://github.com/itchyny/lightline.vim ${plugin_dir}/lightline
+  echo
+
+  echo -n "    vim-buftabline "
+  os::exec_and_wait git clone https://github.com/ap/vim-buftabline ${plugin_dir}/vim-buftabline
+  echo
 }
 
 function dotfiles::install_dotfile() {
@@ -44,7 +49,14 @@ function dotfiles::install_dotfile() {
 function dotfiles::copy_dotfiles() {
   echo
   ui::h1 .files
-  dotfiles::install_dotfile .vimrc ~/.vimrc
+  
+  local vim_dir="${HOME}/.config/nvim"
+  mkdir -p ${vim_dir}
+
+  # TODO decide how to handle nvim (symylink to .vimrc and .vim/?)
+  #dotfiles::install_dotfile .vimrc ~/.vimrc
+  dotfiles::install_dotfile .vimrc ~/.config/nvim/init.vim
+
   dotfiles::install_dotfile .zshrc ~/.zshrc
   dotfiles::install_dotfile .tmux.conf ~/.tmux.conf
 }
@@ -133,12 +145,12 @@ function dotfiles::select_tty_theme() {
     esac
   done
 
-  #echo "Pick a theme:"
-  #__MENU_ON_LINE_SELECT="dofiles::_on_menu_change" \
-  #ui::scroll_menu::show 79 5 "${menuLines[@]}"
-  #__MENU_ON_LINE_SELECT="dofiles::_on_menu_change" \
-  #ui::show_menu 'moep_dark' 'moep (dark)' \
-  #              'moep_light' 'moep (light)' 
+  echo "Pick a theme:"
+  __MENU_ON_LINE_SELECT="dofiles::_on_menu_change" \
+  ui::scroll_menu::show 79 5 "${menuLines[@]}"
+  __MENU_ON_LINE_SELECT="dofiles::_on_menu_change" \
+  ui::show_menu 'moep_dark' 'moep (dark)' \
+                'moep_light' 'moep (light)' 
 }
 
 function dofiles::_on_menu_change() {
@@ -153,6 +165,7 @@ function dofiles::_on_menu_change() {
 
 function dotfiles::_set_tty_colors() {
   # see https://unix.stackexchange.com/questions/55423/how-to-change-cursor-shape-color-and-blinkrate-of-linux-console
+  echo "Black: ${black}"
   tmux::escape "$(echo -en "\e]P0${black}")" 
   tmux::escape "$(echo -en "\e]P1${red}")"
   tmux::escape "$(echo -en "\e]P2${green}")"
@@ -187,10 +200,13 @@ case "${__OS_ARCH}" in
   "Darwin")
     include src/dotfiles/osx.sh
     ;;
+  "Linux")
+    include src/dotfiles/linux.sh
+    ;;
   *)
-  printf "Unsupported OS."
-  exit $RC_ERROR
-  ;;
+    printf "Unsupported OS."
+    #exit $RC_ERROR
+    ;;
 esac
 
 function dotfiles::install_additional_themes() {
@@ -227,8 +243,8 @@ function dotfiles::install_additional_themes() {
     fi
 
     # Print progress bar loop
-    totalFiles=$(find "${themeDir}" -type f -name '*.theme' -d 1 | wc -l)
-    echo "    Converting Files"
+    totalFiles=$(find "${themeDir}" -type f -name '*.theme' | wc -l)
+    echo "    Converting ${totalFiles} Files"
     printf "    "
     ansi::cur_save
     for f in ${themeDir}/*.theme; do

@@ -20,7 +20,7 @@ include lib/osx/iterm2.sh
 include src/dotfiles.sh
 bootstrap::finish
 
-REQUIRED_PGMS=(figlet htop netcat nmap pv screenfetch vim wakeonlan youtube-dl zsh)
+REQUIRED_PGMS=(nvim zsh)
 
 declare -r K_ICON_CHECK='✓'
 declare -r K_ICON_WARN='⚠'
@@ -63,11 +63,14 @@ function main {
   echo 
   
   # Theme selection
-  dotfiles::select_tty_theme
+  #dotfiles::select_tty_theme
   
   # Install programms needed for this script
   ui::h1 prerequisites
   dotfiles::install_prerequisites
+
+  # Copy Dotfiles
+  dotfiles::copy_dotfiles
   
   # Install Vim Plugins
   ui::h1 plugins
@@ -83,8 +86,6 @@ function main {
     echo
   }
 
-  # Copy Dotfiles
-  dotfiles::copy_dotfiles  
 
   ansi::cur_show
 }
