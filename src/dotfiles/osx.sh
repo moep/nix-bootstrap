@@ -1,6 +1,8 @@
 include lib/core.sh
 
 function dotfiles::install_prerequisites() {
+  ui::h2 "Preparing OSX"
+
   if ! os::is_installed? brew; then
     "Installing homebrew ..."
 
