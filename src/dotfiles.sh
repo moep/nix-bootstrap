@@ -18,6 +18,7 @@ function dotfiles::install_vim_plugins() {
   local plugin_dir="${HOME}/.config/nvim/pack/vendor/start"
   mkdir -p "${plugin_dir}" 
 
+  # fzf needs fzf and fzf.vim
   echo -n "    fzf "
   os::exec_and_wait git clone --depth=1 https://github.com/junegunn/fzf ${plugin_dir}/fzf
   echo
@@ -32,6 +33,19 @@ function dotfiles::install_vim_plugins() {
 
   echo -n "    vim-buftabline "
   os::exec_and_wait git clone --depth=1 https://github.com/ap/vim-buftabline ${plugin_dir}/vim-buftabline
+  echo
+
+  echo -n "    comfortable-motion "
+  os::exec_and_wait git clone --depth=1 https://github.com/yuttie/comfortable-motion.vim ${plugin_dir}/comfortable-motion
+  echo
+  
+  echo -n "    tagbar "
+  os::exec_and_wait git clone --depth=1 https://github.com/majutsushi/tagbar ${plugin_dir}/tagbar
+  echo
+
+  # Theme
+  echo -n "    tender "
+  os::exec_and_wait git clone --depth=1 https://github.com/jacoborus/tender.vim ${plugin_dir}/tender
   echo
 }
 
