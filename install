@@ -3,12 +3,9 @@
 # TODO support profiles (desktop (light / normal), server)
 trap on_ctrl_c INT
 
-DIR="${BASH_SOURCE%/*}"
-if [[ ! -d "$DIR" ]]; then
-  DIR="$PWD";
-fi
 
-source "${DIR}/bootstrap.sh"
+source "${BASH_SCRIPT_PATH}/bootstrap.sh"
+
 include lib/cli.sh
 include lib/core.sh
 include lib/os.sh
@@ -17,6 +14,7 @@ include lib/ui.sh
 
 include lib/osx/iterm2.sh
 # Project specific include(s)
+loader_addpath "$(dirname "${BASH_SOURCE[0]}")"
 include src/dotfiles.sh
 bootstrap::finish
 

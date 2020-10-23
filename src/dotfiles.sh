@@ -5,6 +5,10 @@ include lib/math.sh
 include lib/os.sh
 include lib/ui.sh
 
+# TODO include from config
+DOTFILES_REPOSITORY=https://github.com/moep/dotfiles
+DOTFILES_SRC_DIR=${HOME}/.local/ports/dotfiles
+
 # Should be overwritten via dotfiles/xxx.sh
 function dotfiles::install_prerequisites() {
   echo
@@ -38,7 +42,7 @@ function dotfiles::install_vim_plugins() {
   echo -n "    comfortable-motion "
   os::exec_and_wait git clone --depth=1 https://github.com/yuttie/comfortable-motion.vim ${plugin_dir}/comfortable-motion
   echo
-  
+
   echo -n "    tagbar "
   os::exec_and_wait git clone --depth=1 https://github.com/majutsushi/tagbar ${plugin_dir}/tagbar
   echo
@@ -49,37 +53,54 @@ function dotfiles::install_vim_plugins() {
   echo
 }
 
+
+function dotfiles::_clone() {
+  ui::h2 "Cloning dotfiles repository from ${DOTFILES_REPOSITORY} into ${DOTFILES_SRC_DIR}" 
+
+  if [[ -e "${DOTFILES_SRC_DIR}" ]]; then
+    echo "Target direktory already exists. Skipping."
+    return 
+  else
+    echo "mkdir -p ${DOTFILES_SRC_DIR}"
+    mkdir -p ${DOTFILES_SRC_DIR}
+  fi
+
+  echo -n "Cloning"
+  os::exec_and_wait git clone "${DOTFILES_REPOSITORY}" "${DOTFILES_SRC_DIR}"
+  echo
+}
+
 function dotfiles::install_dotfile() {
-  local src="dotfiles/common/$1"
-  local target=$2
+  local src="${DOTFILES_SRC_DIR}/$1"
+  local target="${HOME}/$1"
 
   if [[ -e "${target}" ]]; then
     cli::prompt_yn "Overwrite ${target}?" || return 1
   fi
 
   if [[ $ARG_SYMLINK == "true" ]]; then
-    dotfiles::symlink_dotfile "${src}" "$2"
+    dotfiles::_symlink_dotfile "${src}" "${target}"
   else
-    dotfiles::copy_dotfile "${src}" "$2"
+    dotfiles::_copy_dotfile "${src}" "${target}"
   fi
 }
 
 function dotfiles::copy_dotfiles() {
   echo
   ui::h1 .files
-  
-  local vim_dir="${HOME}/.config/nvim"
-  mkdir -p ${vim_dir}
 
-  # TODO decide how to handle nvim (symylink to .vimrc and .vim/?)
-  #dotfiles::install_dotfile .vimrc ~/.vimrc
-  dotfiles::install_dotfile .vimrc ~/.config/nvim/init.vim
+  dotfiles::_clone || return $?
 
-  dotfiles::install_dotfile .zshrc ~/.zshrc
-  dotfiles::install_dotfile .tmux.conf ~/.tmux.conf
+  dotfiles::install_dotfile .config 
+  dotfiles::install_dotfile .gitconfig 
+  dotfiles::install_dotfile .gitignore 
+  dotfiles::install_dotfile .inputrc 
+  dotfiles::install_dotfile .lessfilter 
+  dotfiles::install_dotfile .tmux.conf 
+
 }
 
-function dotfiles::symlink_dotfile() {
+function dotfiles::_symlink_dotfile() {
   local src=$1
   local target=$2
 
@@ -91,7 +112,7 @@ function dotfiles::symlink_dotfile() {
 }
 
 
-function dotfiles::copy_dotfile() {
+function dotfiles::_copy_dotfile() {
   local src=$1
   local target=$2
 
@@ -103,9 +124,7 @@ function dotfiles::copy_dotfile() {
 }
 
 function dotfiles::select_tty_theme() {
-  dotfiles::install_additional_themes
-  
-
+  dotfiles::install_additional_themes 
   local styles=()
   for f in ${DIR}/themes/tty/extra/*.sh; do
     styles+=("$(basename "$f")")
