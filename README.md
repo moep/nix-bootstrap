@@ -1,3 +1,5 @@
+This script installs my most frequently used tools for my *NIX environments.
+
 # Quickstart
 ## Installing dot files
 Run `install.sh [params]`.
