@@ -3,6 +3,14 @@
 # TODO support profiles (desktop (light / normal), server)
 trap on_ctrl_c INT
 
+# Download and install required bash library framework if not installed
+if [[ -z "${BASH_SCRIPT_PATH+x}" ]]; then
+  echo "Downloading required framework..."
+  source <(curl -s https://raw.githubusercontent.com/moep/shellscripts/master/install) 
+  echo
+  echo "Please restart you shell in order to activate the changes!"
+  exit
+fi
 
 source "${BASH_SCRIPT_PATH}/bootstrap.sh"
 
