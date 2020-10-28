@@ -1,10 +1,30 @@
 include lib/core.sh
+include lib/cli.sh
+include lib/os.sh
 
+# TODO should be part of a separate script
 function dotfiles::_install_gentoo_prerequisites() {
-  printf "Nothing to do for "
-  ansi::magenta "Gentoo"; 
-  ansi::reset
-  printf '.'
+  local basic_pgms=(eix fzf git genlop gentoolkit htop layman ncdu neovim ranger ripgrep tmux ufed)
+  local sudo_cmd="sudo"
+
+  # We need sudo or doas for the next steps
+  if ! os::is_installed? sudo; then
+    core::assert_available doas
+    sudo_cmd="doas"
+  fi
+
+  echo " [*] emerge --sync "
+  #$sudo_cmd emerge --sync
+  
+  # TODO prevent re-emerge
+  echo " [*] emerge ${basic_pgms[@]}"
+  #"${sudo_cmd}" emerge -qa "${basic_pgms[@]}"
+
+  if cli::prompt_yn "Install fish?" y; then
+    echo " [*] emerge fish"
+    #"${sudo_cmd}" emerge -qa fish
+  fi
+
 }
 
 function dotfiles::install_prerequisites() {

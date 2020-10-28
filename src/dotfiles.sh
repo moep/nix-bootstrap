@@ -233,6 +233,7 @@ function dotfiles::_set_tty_colors() {
   #iterm2::set_tab_color "${background}"
 }
 # Overwrite function definition with OS specific ones
+echo "DEBUG $__OS_ARCH"
 case "${__OS_ARCH}" in
   "Darwin")
     include src/dotfiles/osx.sh

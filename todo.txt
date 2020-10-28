@@ -96,3 +96,16 @@ networksetup -setmanual "Ethernet" 192.168.2.100 255.255.255.0 192.168.2.1
 
 # Application using port 
 sudo lsof -i :80
+
+
+
+
+# ls-icons
+https://github.com/mnurzia/even-better-ls
+
+# dmenu from scratch
+https://github.com/muff1nman/dmenu2
+
+#i3 from scratch
+https://github.com/Airblader/i3
+
