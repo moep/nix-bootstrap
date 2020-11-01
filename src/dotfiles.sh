@@ -237,13 +237,16 @@ echo "DEBUG $__OS_ARCH"
 case "${__OS_ARCH}" in
   "Darwin")
     include src/dotfiles/osx.sh
-    ;;
+  ;;
   "Linux")
     include src/dotfiles/linux.sh
-    ;;
+  ;;
+  "OpenBSD")
+    include src/dotfiles/openbsd.sh
+  ;;
   *)
     printf "Unsupported OS."
-    #exit $RC_ERROR
+    exit $RC_ERROR
     ;;
 esac
 

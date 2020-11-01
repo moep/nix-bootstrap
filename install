@@ -27,7 +27,7 @@ loader_addpath "$(dirname "${BASH_SOURCE[0]}")"
 include src/dotfiles.sh
 bootstrap::finish
 
-REQUIRED_PGMS=(git)
+REQUIRED_PGMS=()
 
 declare -r K_ICON_CHECK='✓'
 declare -r K_ICON_WARN='⚠'
