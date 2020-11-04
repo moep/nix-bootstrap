@@ -96,7 +96,6 @@ function dotfiles::copy_dotfiles() {
   dotfiles::install_dotfile .gitignore 
   dotfiles::install_dotfile .inputrc 
   dotfiles::install_dotfile .lessfilter 
-  dotfiles::install_dotfile .tmux.conf 
 
 }
 
