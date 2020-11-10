@@ -1,14 +1,14 @@
+
 include lib/core.sh
 include lib/cli.sh
 include lib/os.sh
 
 
 function dotfiles::install_prerequisites() {
-  ui::h2 "Running OpenBSD tasks"
-
-  # TODO ranger
+  ui::h2 "Running FreeBSD tasks"
+  
   if cli::prompt_yn "Install recommended programms?" "y"; then 
-    doas pkg_add bash coreutils curl fish git ripgrep tmux w3m 
+    doas pkg install bash coreutils curl fish git ranger ripgrep w3m 
   fi
 
   if cli::prompt_yn "Install fzf?" "y"; then

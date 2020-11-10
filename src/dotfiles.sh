@@ -243,6 +243,9 @@ case "${__OS_ARCH}" in
   "OpenBSD")
     include src/dotfiles/openbsd.sh
   ;;
+  "FreeBSD")
+    include src/dotfiles/freebsd.sh
+  ;;
   *)
     printf "Unsupported OS."
     exit $RC_ERROR
