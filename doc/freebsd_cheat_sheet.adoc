@@ -1,0 +1,65 @@
+// compile with: asciidoctor -b manpage freebsd_cheat_cheat
+= freebsd_cheat_cheat(7)
+moep
+:doctype: manpage
+:manmanual: freebsd_cheat_cheat
+:scmansource: freebsd_cheat_cheat
+:man-linkstyle: pass:[blue R < >]
+
+== Name
+freebsd_cheat_sheet - for those who tend to forget
+
+== SYNOPSIS
+See the following chapters for individual invokations.
+
+== PKG
+=== Installing
+Install package::
+  *pkg install* _package_
+
+  - Files will be downloaded to */var/cache/pkg/* 
+  - Repository update can be supressed via *-U* or *--no-repo-update*
+
+Reinstall package:: 
+  *pkg install --force* _package_ 
+
+Reinstall with dependencies::
+  *pkg install -Rf* _package_  
+
+=== Removing
+Remove:: 
+  *pkg delete <package>* 
+
+Autoremove:: 
+  *pkg autoremove* 
+
+Remove old versions from cache::
+  *pkg clean* 
+
+Remove all versions from cache::
+  *pkg clean -a* 
+
+=== Info
+Stats::
+  *pkg stats [-l|-r]* 
+
+List packages without dependencies:: 
+  *pkg query -e '%a = 0' %n-%v* 
+
+Get package dependencies::
+  *pkg info -d <package>* 
+
+Get package files::
+  *pkg info -l <package>* 
+
+== Ports
+Ports are available at */usr/ports*
+
+Initial Setup::
+  *portsnap fetch extract update* 
+
+Update::
+  *portsnap fetch update* 
+
+Search:: 
+*make search name*=_package_ 

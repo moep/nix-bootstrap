@@ -1,0 +1,136 @@
+'\" t
+.\"     Title: freebsd_cheat_cheat
+.\"    Author: moep
+.\" Generator: Asciidoctor 2.0.10
+.\"      Date: 2020-12-15
+.\"    Manual: freebsd_cheat_cheat
+.\"    Source: \ \&
+.\"  Language: English
+.\"
+.TH "FREEBSD_CHEAT_SHEET" "7" "2020-12-15" "\ \&" "freebsd_cheat_cheat"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\fI\\$2\fP <\\$1>\\$3
+..
+.als MTO URL
+.if \n[.g] \{\
+.  mso www.tmac
+.  am URL
+.    ad l
+.  .
+.  am MTO
+.    ad l
+.  .
+.  LINKSTYLE blue R < >
+.\}
+.SH "NAME"
+freebsd_cheat_sheet \- for those who tend to forget
+.SH "SYNOPSIS"
+.sp
+See the following chapters for individual invokations.
+.SH "PKG"
+.SS "Installing"
+.sp
+Install package
+.RS 4
+\fBpkg install\fP \fIpackage\fP
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+Files will be downloaded to \fB/var/cache/pkg/\fP
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+Repository update can be supressed via \fB\-U\fP or \fB\-\-no\-repo\-update\fP
+.RE
+.RE
+.sp
+Reinstall package
+.RS 4
+\fBpkg install \-\-force\fP \fIpackage\fP
+.RE
+.sp
+Reinstall with dependencies
+.RS 4
+\fBpkg install \-Rf\fP \fIpackage\fP
+.RE
+.SS "Removing"
+.sp
+Remove
+.RS 4
+\fBpkg delete <package>\fP
+.RE
+.sp
+Autoremove
+.RS 4
+\fBpkg autoremove\fP
+.RE
+.sp
+Remove old versions from cache
+.RS 4
+\fBpkg clean\fP
+.RE
+.sp
+Remove all versions from cache
+.RS 4
+\fBpkg clean \-a\fP
+.RE
+.SS "Info"
+.sp
+Stats
+.RS 4
+\fBpkg stats [\-l|\-r]\fP
+.RE
+.sp
+List packages without dependencies
+.RS 4
+\fBpkg query \-e \(aq%a = 0\(aq %n\-%v\fP
+.RE
+.sp
+Get package dependencies
+.RS 4
+\fBpkg info \-d <package>\fP
+.RE
+.sp
+Get package files
+.RS 4
+\fBpkg info \-l <package>\fP
+.RE
+.SH "PORTS"
+.sp
+Ports are available at \fB/usr/ports\fP
+.sp
+Initial Setup
+.RS 4
+\fBportsnap fetch extract update\fP
+.RE
+.sp
+Update
+.RS 4
+\fBportsnap fetch update\fP
+.RE
+.sp
+Search
+.RS 4
+\fBmake search name\fP=\fIpackage\fP
+.RE
+.SH "AUTHOR"
+.sp
+moep
