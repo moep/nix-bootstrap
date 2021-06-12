@@ -2,12 +2,12 @@
 .\"     Title: freebsd_cheat_cheat
 .\"    Author: moep
 .\" Generator: Asciidoctor 2.0.10
-.\"      Date: 2020-12-15
+.\"      Date: 2020-12-19
 .\"    Manual: freebsd_cheat_cheat
 .\"    Source: \ \&
 .\"  Language: English
 .\"
-.TH "FREEBSD_CHEAT_SHEET" "7" "2020-12-15" "\ \&" "freebsd_cheat_cheat"
+.TH "FREEBSD_CHEAT_SHEET" "7" "2020-12-19" "\ \&" "freebsd_cheat_cheat"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -122,15 +122,68 @@ Initial Setup
 \fBportsnap fetch extract update\fP
 .RE
 .sp
+Search
+.RS 4
+\fBmake search name\fP=\fIpackage\fP
+.br
+.RE
+.sp
 Update
 .RS 4
 \fBportsnap fetch update\fP
 .RE
 .sp
-Search
+Install
 .RS 4
-\fBmake search name\fP=\fIpackage\fP
+\fBmake install clean\fP
 .RE
+.sp
+Remove
+.RS 4
+\fBmake deinstall\fP
+.RE
+.sp
+Upgrade
+.RS 4
+Read \fB/usr/ports/UPDATING\fP first!
+.br
+\fBportmaster \-L\fP
+.br
+\fBportmaster \-a\fP
+.br
+On error: \fBportmaster \-af\fP
+.RE
+.sp
+Set Config Options
+.RS 4
+Run multiple times:
+.br
+\fBmake config\-recursive\fP
+.RE
+.sp
+Remove Config
+.RS 4
+\fBmake rmconfig\fP
+.RE
+.sp
+Cleanup Distfiles
+.RS 4
+\fBportmaster \-\-clean\-distfiles\fP
+.RE
+.SH "MISC"
+.sp
+Update \fI/var/db/locate.database\fP
+.RS 4
+\fBperiodic weekly\fP.
+.RE
+.sp
+Find file in port
+.RS 4
+\fBpkg\-provides\fP
+.RE
+.SH "SEE ALSO"
+.sp
+ports(7)
 .SH "AUTHOR"
 .sp
 moep

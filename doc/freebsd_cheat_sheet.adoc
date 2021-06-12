@@ -58,8 +58,40 @@ Ports are available at */usr/ports*
 Initial Setup::
   *portsnap fetch extract update* 
 
+Search:: 
+  *make search name*=_package_  +
+
 Update::
   *portsnap fetch update* 
 
-Search:: 
-*make search name*=_package_ 
+Install::
+  *make install clean*
+
+Remove::
+  *make deinstall*
+
+Upgrade::
+  Read */usr/ports/UPDATING* first! +
+  *portmaster -L* +
+  *portmaster -a* +
+  On error: *portmaster -af*
+
+Set Config Options::
+  Run multiple times: +
+  *make config-recursive*
+
+Remove Config::
+  *make rmconfig*
+
+Cleanup Distfiles::
+  *portmaster --clean-distfiles*
+
+== Misc
+Update _/var/db/locate.database_::
+  *periodic weekly*
+
+Find file in port::
+  *pkg-provides*
+
+== See Also
+ports(7)

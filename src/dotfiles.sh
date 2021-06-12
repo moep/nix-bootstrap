@@ -20,6 +20,7 @@ function dotfiles::install_vim_plugins() {
   ui::h2 "Installing Vim plugins"
   # TODO decide how to handle nvim
   local plugin_dir="${HOME}/.config/nvim/pack/vendor/start"
+  local plugin_dir="${XDG_CONFIG_HOME:-${HOME}/.config}/nvim/pack/vendor/start"
   mkdir -p "${plugin_dir}" 
 
   # fzf needs fzf and fzf.vim

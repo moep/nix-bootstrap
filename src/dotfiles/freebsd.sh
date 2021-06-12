@@ -8,7 +8,7 @@ function dotfiles::install_prerequisites() {
   ui::h2 "Running FreeBSD tasks"
   
   if cli::prompt_yn "Install recommended programms?" "y"; then 
-    doas pkg install bash coreutils curl fish git ranger ripgrep w3m 
+    doas pkg install bash coreutils curl fish git glow ranger ripgrep w3m zathura-pdf-mupdf
   fi
 
   if cli::prompt_yn "Install fzf?" "y"; then

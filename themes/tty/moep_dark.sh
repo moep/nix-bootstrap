@@ -1,4 +1,4 @@
-background="464646"
+background="222222"
 foreground="ffffff"
 cursor="c7c7c7"
 
