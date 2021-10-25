@@ -48,10 +48,18 @@ function dotfiles::install_vim_plugins() {
   os::exec_and_wait git clone --depth=1 https://github.com/majutsushi/tagbar ${plugin_dir}/tagbar
   echo
 
+  # Lua Plugins (NeoVim >= 5)
+  echo -n "    nvim-tree.lua "
+  os::exec_and_wait git clone --depth=1 https://github.com/kyazdani42/nvim-tree.lua ${plugin_dir}/nvim-tree.lua
+
+  echo -n "    nvim-web-devicons "
+  os::exec_and_wait git clone --depth=1 https://github.com/kyazdani42/nvim-web-devicons ${plugin_dir}/nvim-web-devicons
+
   # Theme
   echo -n "    tender "
   os::exec_and_wait git clone --depth=1 https://github.com/jacoborus/tender.vim ${plugin_dir}/tender
   echo
+
 }
 
 
